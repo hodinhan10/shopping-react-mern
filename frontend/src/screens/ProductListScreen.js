@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import {
   createProduct,
   deleteProduct,
@@ -16,6 +15,7 @@ import {
 
 export default function ProductListScreen(props) {
   const { pageNumber = 1 } = useParams();
+
   const sellerMode = props.match.path.indexOf('/seller') >= 0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
@@ -115,14 +115,14 @@ export default function ProductListScreen(props) {
                       }
                     >
                       Edit
-                  </button>
+                    </button>
                     <button
                       type="button"
                       className="small"
                       onClick={() => deleteHandler(product)}
                     >
                       Delete
-                  </button>
+                    </button>
                   </td>
                 </tr>
               ))}

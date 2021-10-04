@@ -18,6 +18,12 @@ mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona', {
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
+// mongoose.connect("mongodb+srv://amazona:amazona@cluster0.ydi07.mongodb.net/amazona?retryWrites=true&w=majority", {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true,
+// });
+
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
@@ -29,6 +35,7 @@ app.get('/api/config/google', (req, res) => {
   res.send(process.env.GOOGLE_API_KEY || '');
 });
 const __dirname = path.resolve();
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.get('*', (req, res) =>
@@ -46,3 +53,4 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Serve at http://localhost:${port}`);
 });
+

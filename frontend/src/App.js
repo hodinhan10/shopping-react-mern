@@ -28,10 +28,11 @@ import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
-
+import DashboardScreen from './screens/DashboardScreen';
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
@@ -88,7 +89,7 @@ function App() {
                   <li>
                     <Link to="/profile">User Profile</Link>
                   </li>
-                  <li>
+                <li>
                     <Link to="/orderhistory">Order History</Link>
                   </li>
                   <li>
@@ -205,11 +206,7 @@ function App() {
             component={SearchScreen}
             exact
           ></Route>
-          <AdminRoute
-            path="/productlist/pageNumber/:pageNumber"
-            component={ProductListScreen}
-            exact
-          ></AdminRoute>
+
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
@@ -218,6 +215,12 @@ function App() {
             path="/map"
             component={MapScreen}
           ></PrivateRoute>
+
+          <AdminRoute
+            path="/productlist/pageNumber/:pageNumber"
+            component={ProductListScreen}
+            exact
+          ></AdminRoute>
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}
@@ -228,11 +231,19 @@ function App() {
             component={OrderListScreen}
             exact
           ></AdminRoute>
-          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+          <AdminRoute 
+          path="/userlist" 
+          component={UserListScreen}
+          ></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"
             component={UserEditScreen}
           ></AdminRoute>
+          <AdminRoute
+            path="/dashboard"
+            component={DashboardScreen}
+          ></AdminRoute>
+
           <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}

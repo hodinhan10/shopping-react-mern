@@ -119,6 +119,6 @@ export default function MapScreen(props) {
       </LoadScript>
     </div>
   ) : (
-    <LoadingBox></LoadingBox>
-  );
+      <LoadingBox></LoadingBox>
+    );
 }

@@ -9,6 +9,7 @@ export default function ShippingAddressScreen(props) {
   const { userInfo } = userSignin;
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
+  
   const [lat, setLat] = useState(shippingAddress.lat);
   const [lng, setLng] = useState(shippingAddress.lng);
   const userAddressMap = useSelector((state) => state.userAddressMap);
@@ -37,6 +38,7 @@ export default function ShippingAddressScreen(props) {
         'You did not set your location on map. Continue?'
       );
     }
+
     if (moveOn) {
       dispatch(
         saveShippingAddress({
