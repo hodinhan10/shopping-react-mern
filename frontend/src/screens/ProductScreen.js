@@ -11,7 +11,10 @@ export default function ProductScreen(props) {
   const dispatch = useDispatch();
   const productId = props.match.params.id;
   const [qty, setQty] = useState(1);
-  
+
+  const [display, setDisplay] = useState(false);
+  const [coust, setCoust] = useState(Number(localStorage.getItem('coust')));
+
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
@@ -36,7 +39,8 @@ export default function ProductScreen(props) {
       dispatch({ type: PRODUCT_REVIEW_CREATE_RESET });
     }
     dispatch(detailsProduct(productId));
-  }, [dispatch, productId, successReviewCreate]);
+    localStorage.setItem('coust', JSON.stringify(coust));
+  }, [dispatch, productId, successReviewCreate, coust]);
 
   const addToCartHandler = () => {
     props.history.push(`/cart/${productId}?qty=${qty}`);
@@ -51,6 +55,35 @@ export default function ProductScreen(props) {
       alert('Please enter comment and rating');
     }
   };
+
+  var seconds = 30 * Number(localStorage.getItem('coust'));
+  const loadTimer = setInterval(() => {
+    let title = document.getElementById("countdown")
+    if (seconds <= 0) { 
+      //  kiểm tra product, title đã có hay chưa
+      if (product === null || product === undefined || title === null || title === undefined) {
+        clearInterval(loadTimer) 
+      } else {
+        clearInterval(loadTimer);
+        title.innerHTML = `${product.description}`;
+      }
+    } else {
+      //  fix: đang đếm thời gian, out trang khác sẽ lỗi
+      if (title === null || title === undefined) {
+        clearInterval(loadTimer)
+      } else { // đồng hồ đếm ngược hh : ss
+        var minutes = Math.round((seconds - 30) / 60);
+        var remainingSeconds = seconds % 60;
+        if (remainingSeconds < 10) {
+          remainingSeconds = "0" + remainingSeconds;
+        }
+        title.innerHTML = minutes + ":" + remainingSeconds;
+      }
+    }
+    seconds -= 1;
+  }, 1000);
+
+
   return (
     <div>
       {loading ? (
@@ -82,7 +115,13 @@ export default function ProductScreen(props) {
                 <li>Pirce : ${product.price}</li>
                 <li>
                   Description:
-                  <p>{product.description}</p>
+                  <h2 onClick={() => setDisplay(true)}>
+                    {
+                      display ?
+                        (<div id="countdown"></div>) :
+                        (<div onClick={() => setCoust(coust + 1)}>thông tin</div>)
+                    }
+                  </h2>
                 </li>
               </ul>
             </div>
@@ -160,14 +199,28 @@ export default function ProductScreen(props) {
               <MessageBox>There is no review</MessageBox>
             )}
             <ul>
-              {product.reviews.map((review) => (
-                <li key={review._id}>
-                  <strong>{review.name}</strong>
-                  <Rating rating={review.rating} caption=" "></Rating>
-                  <p>{review.createdAt.substring(0, 10)}</p>
-                  <p>{review.comment}</p>
-                </li>
-              ))}
+              {
+                (userInfo !== null && userInfo.isAdmin) ? (
+                  product.reviews.map((review) => (
+                    <li key={review._id}>
+                      <strong>{review.name}</strong>
+                      <Rating rating={review.rating} caption=" "></Rating>
+                      <p>{review.createdAt.substring(0, 10)}</p>
+                      <p>{review.comment}</p>
+                    </li>
+                  ))
+                ) : (
+                  ([...product.reviews].filter(r => r.rating >= 3)).map((review) => (
+                    <li key={review._id}>
+                      <strong>{review.name}</strong>
+                      <Rating rating={review.rating} caption=" "></Rating>
+                      <p>{review.createdAt.substring(0, 10)}</p>
+                      <p>{review.comment}</p>
+                    </li>
+                  ))
+                )
+              }
+
               <li>
                 {userInfo ? (
                   <form className="form" onSubmit={submitHandler}>
@@ -203,7 +256,7 @@ export default function ProductScreen(props) {
                         Submit
                       </button>
                     </div>
-                  <div>
+                    <div>
                       {loadingReviewCreate && <LoadingBox></LoadingBox>}
                       {errorReviewCreate && (
                         <MessageBox variant="danger">

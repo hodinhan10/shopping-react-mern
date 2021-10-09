@@ -34,8 +34,14 @@ export default function ProductListScreen(props) {
     error: errorDelete,
     success: successDelete,
   } = productDelete;
+  // console.log('products',products)
+  
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+
+  // console.log('products',products.filter(product =>product.seller._id === userInfo._id ))
+  // console.log('userInfo',userInfo) 
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (successCreate) {
@@ -75,8 +81,7 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
-
-      {loadingDelete && <LoadingBox></LoadingBox>}
+      {/* {console.log(products.filter(product =>product.seller._id === userInfo._id ))} */}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loadingCreate && <LoadingBox></LoadingBox>}
@@ -99,7 +104,8 @@ export default function ProductListScreen(props) {
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
+              {(userInfo !== null, userInfo.isAdmin) ? 
+              (products.map((product) => (
                 <tr key={product._id}>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
@@ -125,7 +131,33 @@ export default function ProductListScreen(props) {
                     </button>
                   </td>
                 </tr>
-              ))}
+              )) ): ([...products.filter(p =>p.seller._id === userInfo._id )].map((product) => (
+                <tr key={product._id}>
+                  <td>{product._id}</td>
+                  <td>{product.name}</td>
+                  <td>{product.price}</td>
+                  <td>{product.category}</td>
+                  <td>{product.brand}</td>
+                  <td>
+                    <button
+                      type="button"
+                      className="small"
+                      onClick={() =>
+                        props.history.push(`/product/${product._id}/edit`)
+                      }
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="small"
+                      onClick={() => deleteHandler(product)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              )))}
             </tbody>
           </table>
           <div className="row center pagination">
