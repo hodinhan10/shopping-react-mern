@@ -141,6 +141,9 @@ a.brand {
 .p-1 {
   padding: 1rem;
 }
+.floatRight{
+  float:right
+}
 /* Aside */
 aside {
   position: fixed;

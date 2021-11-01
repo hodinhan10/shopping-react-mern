@@ -29,6 +29,10 @@ import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
+import EssayList from './screens/essay/EssayList';
+import EssayEdit from './screens/essay/EssayEdit';
+import EssayListTrash from './screens/essay/EssayListTrash';
+import EssayCreate from './screens/essay/EssayCreate';
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -36,10 +40,17 @@ function App() {
   const { cartItems } = cart;
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
+
   const dispatch = useDispatch();
   const signoutHandler = () => {
     dispatch(signout());
   };
+
+  const userCoinCreate = useSelector((state) => state.userCoinCreate);
+  const {
+    success: successCoin,
+    coinsUser
+  } = userCoinCreate;
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
@@ -47,9 +58,17 @@ function App() {
     error: errorCategories,
     categories,
   } = productCategoryList;
+
+  const [coins, setCoins] = useState(0);
+
   useEffect(() => {
+
+    if (successCoin) {
+      setCoins(userInfo.coins)
+    }
     dispatch(listProductCategories());
-  }, [dispatch]);
+
+  }, [dispatch, successCoin]);
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -80,8 +99,16 @@ function App() {
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
+
+            {/* coins */}
             {userInfo ? (
               <div className="dropdown">
+                <Link to="/essayList">
+                  Essay
+                </Link>
+                <Link to="#">
+                  tiền: {userInfo.coins ?? 0} đ
+                </Link>
                 <Link to="#">
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
@@ -89,7 +116,7 @@ function App() {
                   <li>
                     <Link to="/profile">User Profile</Link>
                   </li>
-                <li>
+                  <li>
                     <Link to="/orderhistory">Order History</Link>
                   </li>
                   <li>
@@ -174,11 +201,8 @@ function App() {
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
-          <Route
-            path="/product/:id/edit"
-            component={ProductEditScreen}
-            exact
-          ></Route>
+          <Route path="/product/:id/edit" component={ProductEditScreen} exact ></Route>
+
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -186,6 +210,9 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+
+
+
           <Route
             path="/search/name/:name?"
             component={SearchScreen}
@@ -206,6 +233,38 @@ function App() {
             component={SearchScreen}
             exact
           ></Route>
+          {/* ------------------------- */}
+          <PrivateRoute path="/essay/:id/edit" component={EssayEdit} exact></PrivateRoute>
+          <PrivateRoute path="/essay/create" component={EssayCreate} exact></PrivateRoute>
+
+          <PrivateRoute
+            path="/essayList/pageNumber/:pageNumber"
+            component={EssayList}
+            exact
+          ></PrivateRoute>
+          {/* <PrivateRoute
+            path="/essayList/category/:category"
+            component={EssayList}
+            exact
+          ></PrivateRoute> */}
+          {/* <PrivateRoute
+            path="/essayList/category/:category/pageNumber/:pageNumber"
+            component={EssayList}
+            exact
+          ></PrivateRoute> */}
+          <PrivateRoute
+            path="/essayList/category/:category/address/:address/pageNumber/:pageNumber"
+            component={EssayList}
+            exact
+          ></PrivateRoute>
+          <PrivateRoute path="/essayList" component={EssayList} exact></PrivateRoute>
+
+          <PrivateRoute
+            path="/EssayListTrash/pageNumber/:pageNumber"
+            component={EssayListTrash}
+            exact
+          ></PrivateRoute>
+          <PrivateRoute path="/EssayListTrash" component={EssayListTrash} exact></PrivateRoute>
 
           <PrivateRoute
             path="/profile"
@@ -215,6 +274,8 @@ function App() {
             path="/map"
             component={MapScreen}
           ></PrivateRoute>
+
+
 
           <AdminRoute
             path="/productlist/pageNumber/:pageNumber"
@@ -231,9 +292,9 @@ function App() {
             component={OrderListScreen}
             exact
           ></AdminRoute>
-          <AdminRoute 
-          path="/userlist" 
-          component={UserListScreen}
+          <AdminRoute
+            path="/userlist"
+            component={UserListScreen}
           ></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"

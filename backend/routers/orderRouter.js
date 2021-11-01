@@ -64,6 +64,7 @@ orderRouter.get(
         },
       },
     ]);
+    console.log('productCategories',productCategories)
     res.send({ users, orders, dailyOrders, productCategories });
   })
 );

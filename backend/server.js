@@ -6,6 +6,7 @@ import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
 import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
+import essayRouter from './routers/essayRouter.js';
 
 dotenv.config();
 
@@ -19,23 +20,28 @@ app.use(express.urlencoded({ extended: true }));
 //   useCreateIndex: true,
 // });
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/amazona', {
+mongoose.connect( 'mongodb://localhost:27017/amazona', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
 // mongodb+srv://amazona:amazona@cluster0.ydi07.mongodb.net/amazona?retryWrites=true&w=majority
 app.use('/api/uploads', uploadRouter);
+
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/essays', essayRouter);
+
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
 });
+
 app.get('/api/config/google', (req, res) => {
   // res.send(process.env.GOOGLE_API_KEY || '');
   res.send('AIzaSyAFAsrhT_cNCVYzVpzaF20wm-pkL3pH0Vo');
 });
+
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 

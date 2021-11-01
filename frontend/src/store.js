@@ -8,6 +8,22 @@ import thunk from 'redux-thunk';
 import {
   cartReducer
 } from './reducers/cartReducers';
+
+import { 
+  essayBrowseReducer,
+  essayCoinCreateReducer,
+  essayCreateReducer, 
+  essayDeleteForceReducer, 
+  essayDeleteReducer, 
+  essayDeleteSoftReducer, 
+  essayDetailsReducer, 
+  essayHideReducer, 
+  essayListReducer, 
+  essayListTrarhReducer, 
+  essayRestoreReducer, 
+  essayUpdateReducer
+} from './reducers/essayReducers';
+
 import {
   orderCreateReducer,
   orderDetailsReducer,
@@ -18,6 +34,7 @@ import {
   orderDeliverReducer,
   orderSummaryReducer
 } from './reducers/orderReducers';
+
 import {
   productCategoryListReducer,
   productCreateReducer,
@@ -27,8 +44,10 @@ import {
   productReviewCreateReducer,
   productUpdateReducer,
 } from './reducers/productReducers';
+
 import {
   userAddressMapReducer,
+  userCoinCreateReducer,
   userDeleteReducer,
   userDetailsReducer,
   userListReducer,
@@ -56,40 +75,53 @@ const initialState = {
   },
 };
 const reducer = combineReducers({
-  productList: productListReducer,
-  productDetails: productDetailsReducer,
-
   cart: cartReducer,
 
-  userSignin: userSigninReducer,
-  userRegister: userRegisterReducer,
+
+  productList: productListReducer,
+  productDetails: productDetailsReducer,
+  productCreate: productCreateReducer,
+  productUpdate: productUpdateReducer,
+  productDelete: productDeleteReducer,
+  productCategoryList: productCategoryListReducer,
+  productReviewCreate: productReviewCreateReducer,
+
 
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
-  orderMineList: orderMineListReducer,
-
-  userDetails: userDetailsReducer,
-  userUpdateProfile: userUpdateProfileReducer,
-
-  productCreate: productCreateReducer,
-  productUpdate: productUpdateReducer,
-  productDelete: productDeleteReducer,
-
+  orderMineList: orderMineListReducer, 
   orderList: orderListReducer,
   orderDelete: orderDeleteReducer,
   orderDeliver: orderDeliverReducer,
+  orderSummary: orderSummaryReducer,
+  
 
+  userSignin: userSigninReducer,
+  userRegister: userRegisterReducer,
+  userDetails: userDetailsReducer,
+  userUpdateProfile: userUpdateProfileReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
   userUpdate: userUpdateReducer,
   userTopSeller: userTopSellerReducer,
-
-  productCategoryList: productCategoryListReducer,
-  productReviewCreate: productReviewCreateReducer,
-
+  userCoinCreate:userCoinCreateReducer,
   userAddressMap: userAddressMapReducer,
-  orderSummary: orderSummaryReducer,
+  
+
+  essayList: essayListReducer,
+  essayCreate:essayCreateReducer,
+  essayDetails: essayDetailsReducer,
+  essayUpdate: essayUpdateReducer,
+  essayDeleteSoft:essayDeleteSoftReducer,
+  essayListTrarh: essayListTrarhReducer,
+  essayRestore:essayRestoreReducer,
+  essayDeleteForce:essayDeleteForceReducer,
+  essayDelete:essayDeleteReducer,
+  essayBrowse:essayBrowseReducer,
+  essayHide:essayHideReducer,
+  essayCoinCreate:essayCoinCreateReducer,
+
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(

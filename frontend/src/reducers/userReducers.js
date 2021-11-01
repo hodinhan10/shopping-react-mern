@@ -29,6 +29,9 @@ import {
   USER_TOPSELLERS_LIST_SUCCESS,
   USER_TOPSELLERS_LIST_FAIL,
   USER_ADDRESS_MAP_CONFIRM,
+  USER_COIN_CREATE_SUCCESS,
+  USER_COIN_CREATE_FAIL,
+  USER_COIN_CREATE_RESET,
 } from '../constants/userConstants';
 
 export const userRegisterReducer = (state = {}, action) => {
@@ -149,6 +152,22 @@ export const userAddressMapReducer = (state = {}, action) => {
   switch (action.type) {
     case USER_ADDRESS_MAP_CONFIRM:
       return { address: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const userCoinCreateReducer = (state = {}, action) => {
+  switch (action.type) {
+    case USER_COIN_CREATE_SUCCESS:
+      return { 
+        coinsUser: Object.values(action.payload)[1].coins, 
+        success: true, 
+      };
+    case USER_COIN_CREATE_FAIL:
+      return {  error: action.payload };
+      case USER_COIN_CREATE_RESET:
+        return {};
     default:
       return state;
   }

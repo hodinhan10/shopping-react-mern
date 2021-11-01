@@ -21,6 +21,8 @@ import {
 import {
   Link
 } from 'react-router-dom';
+import Essay from '../components/Essay';
+import { listEssays } from '../actions/essayActions';
 
 export default function HomeScreen() {
   const dispatch = useDispatch();
@@ -40,18 +42,36 @@ export default function HomeScreen() {
   useEffect(() => {
     dispatch(listProducts({}));
     dispatch(listTopSellers());
+    dispatch(listEssays({}));
   }, [dispatch]);
 
   // console.log('1',navigator.geolocation.getCurrentPosition(a))
   const [details, setDetails] = useState(null);
 
-    const getUserGeolocationDetails = () => {
-        fetch(
-            "https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708"
-        )
-            .then(response => response.json())
-            .then(data => setDetails(data));
-    };
+  const getUserGeolocationDetails = () => {
+    fetch(
+      "https://geolocation-db.com/json/d802faa0-10bd-11ec-b2fe-47a0872c6708"
+    )
+      .then(response => response.json())
+      .then(data => setDetails(data));
+  };
+  const essayList = useSelector((state) => state.essayList);
+  const {
+    loading: loadingEssays,
+    error: errorEssays,
+    essayRead: essays,
+  } = essayList;
+
+  // const {essayList: {
+  //   essayRead: namo
+  // }} = useSelector((state) => ({ ...state }));
+  // console.log('hello', namo)
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (id) => (event, isExpanded) => {
+    setExpanded(isExpanded ? id : false);
+  };
   return (
     <div>
       <button
@@ -97,8 +117,28 @@ export default function HomeScreen() {
           </Carousel>
         </>
       )}
-      <h2>Featured Products</h2>
-      {loading ? (
+      <div className="accordion">
+
+        <h2>essay</h2>
+        {loadingEssays ? (
+          <LoadingBox></LoadingBox>
+        ) : errorEssays ? (
+          <MessageBox variant="danger">{errorEssays}</MessageBox>
+        ) : (
+          <>
+            {essays.length === 0 && <MessageBox>No essay Found</MessageBox>}
+            {essays.map((essay) => (
+              <div key={essay._id}>
+                <Essay essay={essay} handleChange={handleChange} expanded={expanded}></Essay>
+              </div>
+            ))}
+          </>
+        )}
+      </div>
+
+
+      {/* <h2>Featured Products</h2> */}
+      {/* {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
@@ -111,7 +151,7 @@ export default function HomeScreen() {
             ))}
           </div>
         </>
-      )}
+      )} */}
     </div>
   );
 }

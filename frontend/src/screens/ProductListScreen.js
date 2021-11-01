@@ -34,13 +34,11 @@ export default function ProductListScreen(props) {
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-  // console.log('products',products)
+  console.log('products',products)
   
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
-
-  // console.log('products',products.filter(product =>product.seller._id === userInfo._id ))
-  // console.log('userInfo',userInfo) 
+ 
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -81,7 +79,7 @@ export default function ProductListScreen(props) {
           Create Product
         </button>
       </div>
-      {/* {console.log(products.filter(product =>product.seller._id === userInfo._id ))} */}
+      {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
       {loadingCreate && <LoadingBox></LoadingBox>}

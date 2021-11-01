@@ -1,0 +1,39 @@
+
+html, body {
+
+  background-color: #eee;
+  color: #7a7572;
+}
+
+.h1 {
+  text-align: center;
+  margin: 1.5em 0 0;
+  font-size: 3em;
+  letter-spacing: 1px;
+  text-shadow: 0 1px 2px #666;
+}
+a {
+  text-decoration: none;
+}
+
+.fontWeight {
+  font-weight: bold;
+}
+.accordion {
+  margin: 3em auto;
+  width: 45em;
+}
+
+.option {
+  position: relative;
+  margin-bottom: 1em;
+  border: 0;
+  /* width:600px; */
+}
+.Center {
+  margin: 0 auto;
+
+}
+
+
+

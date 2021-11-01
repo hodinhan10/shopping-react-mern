@@ -7,7 +7,7 @@ heroku config:set MONGODB_URL="mongodb+srv://amazona:amazona@cluster0.ydi07.mong
 
 heroku config:set SKIP_PREFLIGHT_CHECK=true
 git push heroku
-
+heroku login -i
 git add .
 git commit -am "make it better"
 git push heroku master

@@ -38,6 +38,7 @@ userRouter.post(
           email: user.email,
           isAdmin: user.isAdmin,
           isSeller: user.isSeller,
+          coins: user.coins,
           token: generateToken(user),
         });
         return;
@@ -151,6 +152,25 @@ userRouter.put(
 
       user.isSeller = Boolean(req.body.isSeller);
       user.isAdmin = Boolean(req.body.isAdmin);
+      const updatedUser = await user.save();
+      res.send({ message: 'User Updated', user: updatedUser });
+    } else {
+      res.status(404).send({ message: 'User Not Found' });
+    }
+  })
+
+  
+);
+
+//  Nạp tiền vào tài khoản
+userRouter.patch(
+  '/coin/:id',
+  isAuth,
+  // isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);
+    if (user) {
+      user.coins = Number(req.body.coins) + user.coins;
       const updatedUser = await user.save();
       res.send({ message: 'User Updated', user: updatedUser });
     } else {

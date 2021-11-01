@@ -183,7 +183,6 @@ export const summaryOrder = () => async (dispatch, getState) => {
   const {
     userSignin: { userInfo },
   } = getState();
-  console.log('userInfo',userInfo)
   try {
     const { data } = await Axios.get('/api/orders/summary', {
       headers: { Authorization: `Bearer ${userInfo.token}` },

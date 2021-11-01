@@ -31,7 +31,7 @@ export default function DashboardScreen() {
                 </span>
               </div>
               <div className="summary-body">{summary.users[0].numUsers}</div>
-              {console.log('1',summary.users)}
+              {/* {console.log('1',summary.users)} */}
             </li>
             <li>
               <div className="summary-title color2">

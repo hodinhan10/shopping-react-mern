@@ -24,6 +24,8 @@ import {
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
   USER_UPDATE_SUCCESS,
+  USER_COIN_CREATE_SUCCESS,
+USER_COIN_CREATE_FAIL,
 } from '../constants/userConstants';
 
 export const register = (name, email, password) => async (dispatch) => {
@@ -178,6 +180,25 @@ export const listTopSellers = () => async (dispatch) => {
         ? error.response.data.message
         : error.message;
     dispatch({ type: USER_TOPSELLERS_LIST_FAIL, payload: message });
+  }
+};
+
+//  Nạp tiền vào tải khoản 
+export const coinCreateUser = (coins) => async (dispatch, getState) => {
+  const {
+    userSignin: { userInfo },
+  } = getState();
+  try {
+    const { data } = await Axios.patch(`/api/users/coin/${userInfo._id}`, coins, {
+      headers: { Authorization: `Bearer ${userInfo.token}` },
+    });
+    dispatch({ type: USER_COIN_CREATE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: USER_COIN_CREATE_FAIL, payload: message });
   }
 };
 
