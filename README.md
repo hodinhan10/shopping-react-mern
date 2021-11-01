@@ -9,5 +9,5 @@ heroku config:set SKIP_PREFLIGHT_CHECK=true
 git push heroku
 heroku login -i
 git add .
-git commit -am "make it better"
+git commit -am "coin, upload"
 git push heroku master

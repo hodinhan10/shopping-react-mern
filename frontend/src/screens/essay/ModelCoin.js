@@ -28,11 +28,9 @@ export default function ModelCoin(props) {
   const handleOpen = () => (setOpen(true), setCoins(''));
   const handleClose = () => setOpen(false);
 
-
-  // coins
-  // success
   const { success: successCoin } = useSelector((state) => state.userCoinCreate);
   const dispatch = useDispatch();
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(

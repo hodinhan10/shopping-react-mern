@@ -76,7 +76,7 @@ export const createEssay = (essay) => async (dispatch, getState) => {
     const { data } = await Axios.post('/api/essays', { essay }, {
       headers: { Authorization: `Bearer ${userInfo.token}` },
     });
-    dispatch({ type: ESSAY_CREATE_SUCCESS, payload: data, });
+    dispatch({ type: ESSAY_CREATE_SUCCESS, payload: data });
   } catch (error) {
     const message =
       error.response && error.response.data.message ?

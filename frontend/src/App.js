@@ -49,7 +49,6 @@ function App() {
   const userCoinCreate = useSelector((state) => state.userCoinCreate);
   const {
     success: successCoin,
-    coinsUser
   } = userCoinCreate;
 
   const productCategoryList = useSelector((state) => state.productCategoryList);
@@ -59,13 +58,13 @@ function App() {
     categories,
   } = productCategoryList;
 
-  const [coins, setCoins] = useState(0);
+  // const [coins, setCoins] = useState(0);
 
   useEffect(() => {
 
-    if (successCoin) {
-      setCoins(userInfo.coins)
-    }
+    // if (successCoin) {
+    //   setCoins(userInfo.coins)
+    // }
     dispatch(listProductCategories());
 
   }, [dispatch, successCoin]);

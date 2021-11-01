@@ -12,11 +12,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export default function EssayCreate(props) {
-  console.log('props', props)
+  // console.log('props', props)
 
   const [title, setTitle] = useState('');
   const [famous, setFamous] = useState('');
-  const [image, setImage] = useState('');
   const [images, setImages] = useState([]);
   const [category, setCategory] = useState('Tuyển thợ nail');
   const [content, setContent] = useState('');
@@ -44,7 +43,7 @@ export default function EssayCreate(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createEssay({ title, famous, image, images, category, content, address, phone, isStatus: false }));
+    dispatch(createEssay({ title, famous, images, category, content, address, phone, isStatus: false }));
   }
 
   const userSignin = useSelector((state) => state.userSignin);
@@ -53,25 +52,7 @@ export default function EssayCreate(props) {
   const [loadingUpload, setLoadingUpload] = useState(false);
   const [errorUpload, setErrorUpload] = useState('');
 
-  // const uploadFileHandler = async (e) => {
-  //   const file = e.target.files[0];
-  //   const bodyFormData = new FormData();
-  //   bodyFormData.append('image', file);
-  //   setLoadingUpload(true);
-  //   try {
-  //     const { data } = await axios.post('/api/uploads', bodyFormData, {
-  //       headers: {
-  //         'Content-Type': 'multipart/form-data',
-  //         Authorization: `Bearer ${userInfo.token}`,
-  //       },
-  //     });
-  //     setImage(data);
-  //     setLoadingUpload(false);
-  //   } catch (error) {
-  //     setErrorUpload(error.message);
-  //     setLoadingUpload(false);
-  //   }
-  // };
+ 
 
   const fileUploadAndResize = async (e) => {
     const file = e.target.files;
@@ -160,6 +141,7 @@ export default function EssayCreate(props) {
               onChange={fileUploadAndResize}
             ></input>
           </div>
+          
           <div>
             <label htmlFor="title">Tiêu đề</label>
             <input

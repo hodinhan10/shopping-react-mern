@@ -9,7 +9,7 @@ const essayRouter = express.Router();
 essayRouter.get( // lấy danh sách các bài đăng
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 7;
+    const pageSize = 10;
 
     const page = Number(req.query.pageNumber) || 1;
     const category = req.query.category || '';
@@ -58,11 +58,13 @@ essayRouter.post(
   '/',
   isAuth,
   expressAsyncHandler(async (req, res) => {
+    console.log('req',req)
     const idUser = { idUser: req.user._id }
+    console.log('idUser',idUser)
     const essay = new Essay({ ...req.body.essay, ...idUser });
     // console.log('essay BE', essay)
     const createdEssay = await essay.save();
-    // console.log('createdEssay', createdEssay)
+    console.log('createdEssay', createdEssay)
     if (createdEssay) {
       res.send({ message: 'Essay Created', essay: createdEssay });
     } else {

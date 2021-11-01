@@ -5,7 +5,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import {
   Carousel
 } from 'react-responsive-carousel';
-import Product from '../components/Product';
+// import Product from '../components/Product';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import {
@@ -28,9 +28,9 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const {
-    loading,
-    error,
-    products
+    // loading,
+    // error,
+    // products
   } = productList;
   const userTopSeller = useSelector((state) => state.userTopSeller);
   const {

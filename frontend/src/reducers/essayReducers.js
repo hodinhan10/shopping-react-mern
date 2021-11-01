@@ -57,6 +57,7 @@ export const essayListReducer = (state = { loading: true, essays: [] }, action) 
         return b.coinSum - a.coinSum;
       });
       const data =[...sortData,...ZeroData]
+
       return {
         loading: false,
         essays: data,

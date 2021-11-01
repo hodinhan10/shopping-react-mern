@@ -16,7 +16,7 @@ const essaySchema = new mongoose.Schema(
     famous: { type: String},
     category: { type: String, required: true },
     image: { type: String },
-    seller: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
+    idUser: { type: mongoose.Schema.Types.ObjectID, ref: 'User' },
     images: {
       type: Array,
     },

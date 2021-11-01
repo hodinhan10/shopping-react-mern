@@ -14,7 +14,6 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { addressUS } from '../../utils.js';
 import Essay from '../../components/Essay';
-import TextField from '@mui/material/TextField';
 
 import ModelCoin from './ModelCoin';
 import ModelCoinEssay from './ModelCoinEssay';
@@ -55,7 +54,7 @@ function EssayList(props) {
   const { success: successBrowse } = useSelector((state) => (state.essayBrowse));
   const { success: successHide } = useSelector((state) => (state.essayHide));
 
-  const { coins } = useSelector((state) => state.userCoinCreate);
+  // const { coins } = useSelector((state) => state.userCoinCreate);
 
   // console.log('successBrowse',successBrowse)
   useEffect(() => {
@@ -109,11 +108,15 @@ function EssayList(props) {
     return `/essayList/category/${filterCategory}/address/${filteraddress}/pageNumber/${filterPage}`;
   };
 
-
+  const dataEssay = (userInfo && userInfo.isAdmin) ?
+    essays :
+    essays ?
+      [...essays.filter(p => p.idUser === userInfo._id)] :
+      []
 
   return (
     <div className="container">
-      <h1 className="h1">Nail</h1>
+      {/* <h1 className="h1">Nail</h1> */}
       <div className="accordion">
         <Button
           color='success'
@@ -186,9 +189,9 @@ function EssayList(props) {
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <>
-            {essays.length === 0 && <MessageBox>No essay Found</MessageBox>}
+            {dataEssay.length === 0 && <MessageBox>No essay Found</MessageBox>}
             <div className="accordion">
-              {essays.map((essay) => (
+              {dataEssay.map((essay) => (
                 <div key={essay._id}>
                   <Essay essay={essay} handleChange={handleChange} expanded={expanded}></Essay>
                   <Grid sx={{ mt: 1 }}>

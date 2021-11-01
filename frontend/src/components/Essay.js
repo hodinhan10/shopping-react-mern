@@ -6,8 +6,11 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import { useSelector } from 'react-redux';
 export default function Essay(props) {
   const { essay, handleChange, expanded } = props;
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
   return (
     <>
       <Accordion
@@ -32,7 +35,7 @@ export default function Essay(props) {
         <AccordionDetails >
           <Typography sx={{ fontSize: 16 }}>
             <span className="fontWeight">Date:</span>
-            <span> October 12, 2021 |</span>
+            <span> {essay.createdAt} |</span>
           </Typography>
 
           {(essay.images)[0] ?
@@ -59,7 +62,7 @@ export default function Essay(props) {
           </Typography>
           <Typography sx={{ fontSize: 16, mt: 2 }}>
             <span className="fontWeight">Name:</span>
-            <span> Sean Nguyen</span>
+            <span> {userInfo.name}</span>
           </Typography>
           <Typography sx={{ fontSize: 16 }}>
             <span className="fontWeight">Phone Number:</span>

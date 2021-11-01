@@ -34,7 +34,7 @@ export default function ProductListScreen(props) {
     error: errorDelete,
     success: successDelete,
   } = productDelete;
-  console.log('products',products)
+  // console.log('products',products)
   
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
