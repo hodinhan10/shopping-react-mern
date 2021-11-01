@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 //   useCreateIndex: true,
 // });
 
-mongoose.connect( 'mongodb://localhost:27017/amazona', {
+mongoose.connect( 'mongodb+srv://amazona:amazona@cluster0.ydi07.mongodb.net/amazona?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
