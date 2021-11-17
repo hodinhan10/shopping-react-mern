@@ -9,8 +9,8 @@ import ImageListItem from '@mui/material/ImageListItem';
 import { useSelector } from 'react-redux';
 export default function Essay(props) {
   const { essay, handleChange, expanded } = props;
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+  // const userSignin = useSelector((state) => state.userSignin);
+  // const { userInfo } = userSignin;
   return (
     <>
       <Accordion
@@ -62,7 +62,7 @@ export default function Essay(props) {
           </Typography>
           <Typography sx={{ fontSize: 16, mt: 2 }}>
             <span className="fontWeight">Name:</span>
-            <span> {userInfo.name}</span>
+            {/* <span> {userInfo.name}</span> */}
           </Typography>
           <Typography sx={{ fontSize: 16 }}>
             <span className="fontWeight">Phone Number:</span>
