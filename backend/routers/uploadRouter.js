@@ -41,11 +41,11 @@ uploadRouter.post('/remove', isAuth, upload.single('images'), (req, res) => {
 });
 
 uploadRouter.post('/removeImage',isAuth, upload.single('images'),expressAsyncHandler( async (req, res) =>{
-  console.log('req',req)
+  // console.log('req',req)
   const a = await uploadToRemoteBucket(req.body.image)
-  console.log('a',a)
+  // console.log('a',a)
   const b =await unlinkAsync(req.body.image)
-  console.log('b',b)
+  // console.log('b',b)
   res.end("UPLOAD COMPLETED!")
 }))
 

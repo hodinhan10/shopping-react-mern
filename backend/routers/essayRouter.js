@@ -9,7 +9,7 @@ const essayRouter = express.Router();
 essayRouter.get( // lấy danh sách các bài đăng
   '/',
   expressAsyncHandler(async (req, res) => {
-    const pageSize = 10;
+    const pageSize = 15;
 
     const page = Number(req.query.pageNumber) || 1;
     const category = req.query.category || '';
@@ -30,7 +30,7 @@ essayRouter.get( // lấy danh sách các bài đăng
       ...addressFilter,
     })
       // .sort({ _id: -1 })
-      .populate('seller', 'seller.name seller.logo')
+      .populate('idUser', 'seller.name')
       .skip(pageSize * (page - 1))
       .limit(pageSize);
     // => skip là loại bỏ số phần tử đầu tiên, 0 trả về chính nó

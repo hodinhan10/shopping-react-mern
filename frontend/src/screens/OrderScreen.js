@@ -68,7 +68,7 @@ export default function OrderScreen(props) {
     dispatch(payOrder(order, paymentResult));
   };
 
-  const deliverHander = (order) => {
+  const deliverHander = () => {
     dispatch(deliverOrders(order._id))
   }
 

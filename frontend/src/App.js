@@ -62,9 +62,6 @@ function App() {
 
   useEffect(() => {
 
-    // if (successCoin) {
-    //   setCoins(userInfo.coins)
-    // }
     dispatch(listProductCategories());
 
   }, [dispatch, successCoin]);
@@ -101,13 +98,13 @@ function App() {
 
             {/* coins */}
             {userInfo ? (
-              <div className="dropdown">
+              <div className="dropdown" >
                 <Link to="/essayList">
                   Essay
                 </Link>
-                <Link to="#">
-                  tiền: {userInfo.coins ?? 0} đ
-                </Link>
+                {/* <Link to="#">
+                  Coin: {userInfo.coins ?? 0} đ
+                </Link> */}
                 <Link to="#">
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                 </Link>
@@ -166,6 +163,7 @@ function App() {
             )}
           </div>
         </header>
+
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
@@ -194,8 +192,64 @@ function App() {
                 </li>
               ))
             )}
+            {/* Reponsi */}
+            <div className="reponsi">
+              {userInfo && userInfo.isAdmin && (
+                <ul >
+                  <li>
+                    <strong>Admin</strong>
+                  </li>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              )}
+              {userInfo ? (
+                <ul>
+                  <li>
+                    <strong>{userInfo.name}</strong>
+                  </li>
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              ) : (
+                <Link to="/signin">Sign In</Link>
+              )}
+              {userInfo && userInfo.isSeller && (
+                <ul>
+                  <li>
+                    <strong>Seller</strong>
+                  </li>
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              )}
+            </div>
           </ul>
         </aside>
+        
         <main>
           <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>

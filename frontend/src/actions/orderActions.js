@@ -161,7 +161,7 @@ export const deliverOrders = (orderId) => async (dispatch, getState) => {
     userSignin: { userInfo },
   } = getState();
   try {
-    const { data } = await Axios.delete(`/api/orders/${orderId}/deliver`,
+    const { data } = await Axios.put(`/api/orders/${orderId}/deliver`,
       {},
       {
         headers: {

@@ -147,7 +147,7 @@ export default function EssayEdit(props) {
                 {errorUpload && (
                   <MessageBox variant="danger">{errorUpload}</MessageBox>
                 )}
-                <label htmlFor="imageFile">Choose File</label>
+                <label htmlFor="imageFile">Chọn file</label>
                 <input
                   type="file"
                   id="imageFile"
@@ -157,7 +157,7 @@ export default function EssayEdit(props) {
                   onChange={fileUploadAndResize}
                 ></input>
               </div>
-              <label htmlFor="title">title</label>
+              <label htmlFor="title">Tiêu đề</label>
               <input
                 id="title"
                 type="text"
@@ -167,7 +167,7 @@ export default function EssayEdit(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="famous">famous</label>
+              <label htmlFor="famous">Nổi bật</label>
               <input
                 id="famous"
                 type="text"
@@ -177,7 +177,7 @@ export default function EssayEdit(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category">Thể loại</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
@@ -191,7 +191,7 @@ export default function EssayEdit(props) {
 
             </div>
             <div>
-              <label htmlFor="content">content</label>
+              <label htmlFor="content">Nội dung</label>
               <textarea
                 id="content"
                 type="text"
@@ -203,7 +203,7 @@ export default function EssayEdit(props) {
               ></textarea>
             </div>
             <div>
-              <label htmlFor="address">address</label>
+              <label htmlFor="address">Địa chỉ</label>
               <select
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -215,7 +215,7 @@ export default function EssayEdit(props) {
               </select>
             </div>
             <div>
-              <label htmlFor="phone">phone</label>
+              <label htmlFor="phone">Số điện thoại</label>
               <input
                 id="phone"
                 type="text"
