@@ -36,14 +36,16 @@ import { signout } from './actions/userActions';
 // import EssayListTrash from './screens/essay/EssayListTrash';
 // import EssayCreate from './screens/essay/EssayCreate';
 import { listProductCategories } from './actions/productActions';
+
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
-import SellerRoute from './components/SellerRoute';
-import SearchBox from './components/SearchBox';
 import LoadingBox from './components/LoadingBox';
-import MessageBox from './components/MessageBox';
+import SellerRoute from './components/SellerRoute';
+
 
 // used lazy
+const MessageBox = React.lazy(() => import('./components/MessageBox'));
+const SearchBox = React.lazy(() => import('./components/SearchBox'));
 const CartScreen = React.lazy(() => import('./screens/CartScreen'));
 const HomeScreen = React.lazy(() => import('./screens/HomeScreen'));
 const OrderHistoryScreen = React.lazy(() => import('./screens/OrderHistoryScreen'));
@@ -102,106 +104,106 @@ function App() {
 
   }, [dispatch, successCoin]);
   return (
-    <Suspense fallback={<LoadingBox></LoadingBox>}>
 
-      <BrowserRouter>
-        <div className="grid-container">
-          <header className="row">
-            <div>
-              <button
-                type="button"
-                className="open-sidebar"
-                onClick={() => setSidebarIsOpen(true)}
-              >
-                <i className="fa fa-bars"></i>
-              </button>
-              <Link className="brand" to="/">
-                amazona
-              </Link>
-            </div>
-            <div>
-              <Route
-                render={({ history }) => (
-                  <SearchBox history={history}></SearchBox>
-                )}
-              ></Route>
-            </div>
-            <div>
-              <Link to="/cart">
-                Cart
-                {cartItems.length > 0 && (
-                  <span className="badge">{cartItems.length}</span>
-                )}
-              </Link>
 
-              {/* coins */}
-              {userInfo ? (
-                <div className="dropdown" >
-                  <Link to="/essayList">
-                    Essay
-                  </Link>
-                  {/* <Link to="#">
+    <BrowserRouter>
+      <div className="grid-container">
+        <header className="row">
+          <div>
+            <button
+              type="button"
+              className="open-sidebar"
+              onClick={() => setSidebarIsOpen(true)}
+            >
+              <i className="fa fa-bars"></i>
+            </button>
+            <Link className="brand" to="/">
+              amazona
+            </Link>
+          </div>
+          <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
+          </div>
+          <div>
+            <Link to="/cart">
+              Cart
+              {cartItems.length > 0 && (
+                <span className="badge">{cartItems.length}</span>
+              )}
+            </Link>
+
+            {/* coins */}
+            {userInfo ? (
+              <div className="dropdown" >
+                <Link to="/essayList">
+                  Essay
+                </Link>
+                {/* <Link to="#">
                   Coin: {userInfo.coins ?? 0} đ
                 </Link> */}
-                  <Link to="#">
-                    {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
-                  </Link>
-                  <ul className="dropdown-content">
-                    <li>
-                      <Link to="/profile">User Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderhistory">Order History</Link>
-                    </li>
-                    <li>
-                      <Link to="#signout" onClick={signoutHandler}>
-                        Sign Out
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              ) : (
-                <Link to="/signin">Sign In</Link>
-              )}
-              {userInfo && userInfo.isSeller && (
-                <div className="dropdown">
-                  <Link to="#admin">
-                    Seller <i className="fa fa-caret-down"></i>
-                  </Link>
-                  <ul className="dropdown-content">
-                    <li>
-                      <Link to="/productlist/seller">Products</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderlist/seller">Orders</Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-              {userInfo && userInfo.isAdmin && (
-                <div className="dropdown">
-                  <Link to="#admin">
-                    Admin <i className="fa fa-caret-down"></i>
-                  </Link>
-                  <ul className="dropdown-content">
-                    <li>
-                      <Link to="/dashboard">Dashboard</Link>
-                    </li>
-                    <li>
-                      <Link to="/productlist">Products</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderlist">Orders</Link>
-                    </li>
-                    <li>
-                      <Link to="/userlist">Users</Link>
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </header>
-
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/signin">Sign In</Link>
+            )}
+            {userInfo && userInfo.isSeller && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Seller <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              </div>
+            )}
+          </div>
+        </header>
+        <Suspense fallback={<LoadingBox></LoadingBox>}>
           <aside className={sidebarIsOpen ? 'open' : ''}>
             <ul className="categories">
               <li>
@@ -400,10 +402,10 @@ function App() {
             <Route path="/" component={HomeScreen} exact></Route>
             <Route path="/pageNumber/:pageNumber" component={HomeScreen} exact></Route>
           </main>
-          <footer className="row center">All right reserved</footer>
-        </div>
-      </BrowserRouter>
-    </Suspense>
+        </Suspense>
+        <footer className="row center">All right reserved</footer>
+      </div>
+    </BrowserRouter>
 
   );
 }
