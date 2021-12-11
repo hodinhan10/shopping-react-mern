@@ -43,7 +43,7 @@ import SearchBox from './components/SearchBox';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 
-// const OtherComponent = React.lazy(() => import('./OtherComponent'));
+// used lazy
 const CartScreen = React.lazy(() => import('./screens/CartScreen'));
 const HomeScreen = React.lazy(() => import('./screens/HomeScreen'));
 const OrderHistoryScreen = React.lazy(() => import('./screens/OrderHistoryScreen'));
@@ -102,191 +102,192 @@ function App() {
 
   }, [dispatch, successCoin]);
   return (
-    <BrowserRouter>
-      <div className="grid-container">
-        <header className="row">
-          <div>
-            <button
-              type="button"
-              className="open-sidebar"
-              onClick={() => setSidebarIsOpen(true)}
-            >
-              <i className="fa fa-bars"></i>
-            </button>
-            <Link className="brand" to="/">
-              amazona
-            </Link>
-          </div>
-          <div>
-            <Route
-              render={({ history }) => (
-                <SearchBox history={history}></SearchBox>
-              )}
-            ></Route>
-          </div>
-          <div>
-            <Link to="/cart">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
-            </Link>
+    <Suspense fallback={<LoadingBox></LoadingBox>}>
 
-            {/* coins */}
-            {userInfo ? (
-              <div className="dropdown" >
-                <Link to="/essayList">
-                  Essay
-                </Link>
-                {/* <Link to="#">
+      <BrowserRouter>
+        <div className="grid-container">
+          <header className="row">
+            <div>
+              <button
+                type="button"
+                className="open-sidebar"
+                onClick={() => setSidebarIsOpen(true)}
+              >
+                <i className="fa fa-bars"></i>
+              </button>
+              <Link className="brand" to="/">
+                amazona
+              </Link>
+            </div>
+            <div>
+              <Route
+                render={({ history }) => (
+                  <SearchBox history={history}></SearchBox>
+                )}
+              ></Route>
+            </div>
+            <div>
+              <Link to="/cart">
+                Cart
+                {cartItems.length > 0 && (
+                  <span className="badge">{cartItems.length}</span>
+                )}
+              </Link>
+
+              {/* coins */}
+              {userInfo ? (
+                <div className="dropdown" >
+                  <Link to="/essayList">
+                    Essay
+                  </Link>
+                  {/* <Link to="#">
                   Coin: {userInfo.coins ?? 0} đ
                 </Link> */}
-                <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/profile">User Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderhistory">Order History</Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link to="/signin">Sign In</Link>
-            )}
-            {userInfo && userInfo.isSeller && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Seller <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/productlist/seller">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist/seller">Orders</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </header>
-
-        <aside className={sidebarIsOpen ? 'open' : ''}>
-          <ul className="categories">
-            <li>
-              <strong>Categories</strong>
-              <button
-                onClick={() => setSidebarIsOpen(false)}
-                className="close-sidebar"
-                type="button"
-              >
-                <i className="fa fa-close"></i>
-              </button>
-            </li>
-            {loadingCategories ? (
-              <LoadingBox></LoadingBox>
-            ) : errorCategories ? (
-              <MessageBox variant="danger">{errorCategories}</MessageBox>
-            ) : (
-              categories.map((c) => (
-                <li key={c}>
-                  <Link
-                    to={`/search/category/${c}`}
-                    onClick={() => setSidebarIsOpen(false)}
-                  >
-                    {c}
+                  <Link to="#">
+                    {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
                   </Link>
-                </li>
-              ))
-            )}
-
-            {/* Reponsi */}
-            <div className="reponsi">
-              {userInfo && userInfo.isAdmin && (
-                <ul >
-                  <li>
-                    <strong>Admin</strong>
-                  </li>
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              )}
-              {userInfo ? (
-                <ul>
-                  <li>
-                    <strong>{userInfo.name}</strong>
-                  </li>
-                  <li>
-                    <Link to="/profile">User Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderhistory">Order History</Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/profile">User Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderhistory">Order History</Link>
+                    </li>
+                    <li>
+                      <Link to="#signout" onClick={signoutHandler}>
+                        Sign Out
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               ) : (
                 <Link to="/signin">Sign In</Link>
               )}
               {userInfo && userInfo.isSeller && (
-                <ul>
-                  <li>
-                    <strong>Seller</strong>
-                  </li>
-                  <li>
-                    <Link to="/productlist/seller">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist/seller">Orders</Link>
-                  </li>
-                </ul>
+                <div className="dropdown">
+                  <Link to="#admin">
+                    Seller <i className="fa fa-caret-down"></i>
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/productlist/seller">Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist/seller">Orders</Link>
+                    </li>
+                  </ul>
+                </div>
+              )}
+              {userInfo && userInfo.isAdmin && (
+                <div className="dropdown">
+                  <Link to="#admin">
+                    Admin <i className="fa fa-caret-down"></i>
+                  </Link>
+                  <ul className="dropdown-content">
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+                    <li>
+                      <Link to="/productlist">Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist">Orders</Link>
+                    </li>
+                    <li>
+                      <Link to="/userlist">Users</Link>
+                    </li>
+                  </ul>
+                </div>
               )}
             </div>
-          </ul>
-        </aside>
-        <Suspense fallback={<LoadingBox></LoadingBox>}>
+          </header>
+
+          <aside className={sidebarIsOpen ? 'open' : ''}>
+            <ul className="categories">
+              <li>
+                <strong>Categories</strong>
+                <button
+                  onClick={() => setSidebarIsOpen(false)}
+                  className="close-sidebar"
+                  type="button"
+                >
+                  <i className="fa fa-close"></i>
+                </button>
+              </li>
+              {loadingCategories ? (
+                <LoadingBox></LoadingBox>
+              ) : errorCategories ? (
+                <MessageBox variant="danger">{errorCategories}</MessageBox>
+              ) : (
+                categories.map((c) => (
+                  <li key={c}>
+                    <Link
+                      to={`/search/category/${c}`}
+                      onClick={() => setSidebarIsOpen(false)}
+                    >
+                      {c}
+                    </Link>
+                  </li>
+                ))
+              )}
+
+              {/* Reponsi */}
+              <div className="reponsi">
+                {userInfo && userInfo.isAdmin && (
+                  <ul >
+                    <li>
+                      <strong>Admin</strong>
+                    </li>
+                    <li>
+                      <Link to="/dashboard">Dashboard</Link>
+                    </li>
+                    <li>
+                      <Link to="/productlist">Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist">Orders</Link>
+                    </li>
+                    <li>
+                      <Link to="/userlist">Users</Link>
+                    </li>
+                  </ul>
+                )}
+                {userInfo ? (
+                  <ul>
+                    <li>
+                      <strong>{userInfo.name}</strong>
+                    </li>
+                    <li>
+                      <Link to="/profile">User Profile</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderhistory">Order History</Link>
+                    </li>
+                    <li>
+                      <Link to="#signout" onClick={signoutHandler}>
+                        Sign Out
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  <Link to="/signin">Sign In</Link>
+                )}
+                {userInfo && userInfo.isSeller && (
+                  <ul>
+                    <li>
+                      <strong>Seller</strong>
+                    </li>
+                    <li>
+                      <Link to="/productlist/seller">Products</Link>
+                    </li>
+                    <li>
+                      <Link to="/orderlist/seller">Orders</Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            </ul>
+          </aside>
 
           <main>
             <Route path="/seller/:id" component={SellerScreen}></Route>
@@ -399,10 +400,11 @@ function App() {
             <Route path="/" component={HomeScreen} exact></Route>
             <Route path="/pageNumber/:pageNumber" component={HomeScreen} exact></Route>
           </main>
-        </Suspense>
-        <footer className="row center">All right reserved</footer>
-      </div>
-    </BrowserRouter>
+          <footer className="row center">All right reserved</footer>
+        </div>
+      </BrowserRouter>
+    </Suspense>
+
   );
 }
 
