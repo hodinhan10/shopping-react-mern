@@ -52,6 +52,7 @@ export default function SearchScreen(props) {
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
   };
+  
   return (
     <div>
       <div className="row">

@@ -12,6 +12,7 @@ export const addToCart = (productId, qty) => async (dispatch, getState) => {
   const {
     cart: { cartItems },
   } = getState();
+  // console.log('cartItems',cartItems)
   if (cartItems.length > 0 && data.seller._id !== cartItems[0].seller._id) {
     dispatch({
       type: CART_ADD_ITEM_FAIL,

@@ -1,38 +1,74 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter, Link, Route } from 'react-router-dom';
 import { signout } from './actions/userActions';
+
+
+// import AdminRoute from './components/AdminRoute';
+// import PrivateRoute from './components/PrivateRoute';
+// import CartScreen from './screens/CartScreen';
+// import HomeScreen from './screens/HomeScreen';
+// import OrderHistoryScreen from './screens/OrderHistoryScreen';
+// import OrderScreen from './screens/OrderScreen';
+// import PaymentMethodScreen from './screens/PaymentMethodScreen';
+// import PlaceOrderScreen from './screens/PlaceOrderScreen';
+// import ProductListScreen from './screens/ProductListScreen';
+// import ProductScreen from './screens/ProductScreen';
+// import ProfileScreen from './screens/ProfileScreen';
+// import RegisterScreen from './screens/RegisterScreen';
+// import ShippingAddressScreen from './screens/ShippingAddressScreen';
+// import SigninScreen from './screens/SigninScreen';
+// import ProductEditScreen from './screens/ProductEditScreen';
+// import OrderListScreen from './screens/OrderListScreen';
+// import UserListScreen from './screens/UserListScreen';
+// import UserEditScreen from './screens/UserEditScreen';
+// import SellerRoute from './components/SellerRoute';
+// import SellerScreen from './screens/SellerScreen';
+// import SearchBox from './components/SearchBox';
+// import SearchScreen from './screens/SearchScreen';
+// import { listProductCategories } from './actions/productActions';
+// import LoadingBox from './components/LoadingBox';
+// import MessageBox from './components/MessageBox';
+// import MapScreen from './screens/MapScreen';
+// import DashboardScreen from './screens/DashboardScreen';
+// import EssayList from './screens/essay/EssayList';
+// import EssayEdit from './screens/essay/EssayEdit';
+// import EssayListTrash from './screens/essay/EssayListTrash';
+// import EssayCreate from './screens/essay/EssayCreate';
+import { listProductCategories } from './actions/productActions';
 import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
-import CartScreen from './screens/CartScreen';
-import HomeScreen from './screens/HomeScreen';
-import OrderHistoryScreen from './screens/OrderHistoryScreen';
-import OrderScreen from './screens/OrderScreen';
-import PaymentMethodScreen from './screens/PaymentMethodScreen';
-import PlaceOrderScreen from './screens/PlaceOrderScreen';
-import ProductListScreen from './screens/ProductListScreen';
-import ProductScreen from './screens/ProductScreen';
-import ProfileScreen from './screens/ProfileScreen';
-import RegisterScreen from './screens/RegisterScreen';
-import ShippingAddressScreen from './screens/ShippingAddressScreen';
-import SigninScreen from './screens/SigninScreen';
-import ProductEditScreen from './screens/ProductEditScreen';
-import OrderListScreen from './screens/OrderListScreen';
-import UserListScreen from './screens/UserListScreen';
-import UserEditScreen from './screens/UserEditScreen';
 import SellerRoute from './components/SellerRoute';
-import SellerScreen from './screens/SellerScreen';
 import SearchBox from './components/SearchBox';
-import SearchScreen from './screens/SearchScreen';
-import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
-import MapScreen from './screens/MapScreen';
-import DashboardScreen from './screens/DashboardScreen';
-import EssayList from './screens/essay/EssayList';
-import EssayEdit from './screens/essay/EssayEdit';
-import EssayListTrash from './screens/essay/EssayListTrash';
-import EssayCreate from './screens/essay/EssayCreate';
+
+// const OtherComponent = React.lazy(() => import('./OtherComponent'));
+const CartScreen = React.lazy(() => import('./screens/CartScreen'));
+const HomeScreen = React.lazy(() => import('./screens/HomeScreen'));
+const OrderHistoryScreen = React.lazy(() => import('./screens/OrderHistoryScreen'));
+const OrderScreen = React.lazy(() => import('./screens/OrderScreen'));
+const PaymentMethodScreen = React.lazy(() => import('./screens/PaymentMethodScreen'));
+const PlaceOrderScreen = React.lazy(() => import('./screens/PlaceOrderScreen'));
+const ProductListScreen = React.lazy(() => import('./screens/ProductListScreen'));
+const ProductScreen = React.lazy(() => import('./screens/ProductScreen'));
+const ProfileScreen = React.lazy(() => import('./screens/ProfileScreen'));
+const RegisterScreen = React.lazy(() => import('./screens/RegisterScreen'));
+const ShippingAddressScreen = React.lazy(() => import('./screens/ShippingAddressScreen'));
+const SigninScreen = React.lazy(() => import('./screens/SigninScreen'));
+const ProductEditScreen = React.lazy(() => import('./screens/ProductEditScreen'));
+const OrderListScreen = React.lazy(() => import('./screens/OrderListScreen'));
+const UserListScreen = React.lazy(() => import('./screens/UserListScreen'));
+const UserEditScreen = React.lazy(() => import('./screens/UserEditScreen'));
+const SellerScreen = React.lazy(() => import('./screens/SellerScreen'));
+const SearchScreen = React.lazy(() => import('./screens/SearchScreen'));
+const MapScreen = React.lazy(() => import('./screens/MapScreen'));
+const DashboardScreen = React.lazy(() => import('./screens/DashboardScreen'));
+const EssayList = React.lazy(() => import('./screens/essay/EssayList'));
+const EssayEdit = React.lazy(() => import('./screens/essay/EssayEdit'));
+const EssayListTrash = React.lazy(() => import('./screens/essay/EssayListTrash'));
+const EssayCreate = React.lazy(() => import('./screens/essay/EssayCreate'));
+
 function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
@@ -192,6 +228,7 @@ function App() {
                 </li>
               ))
             )}
+
             {/* Reponsi */}
             <div className="reponsi">
               {userInfo && userInfo.isAdmin && (
@@ -249,126 +286,120 @@ function App() {
             </div>
           </ul>
         </aside>
-        
-        <main>
-          <Route path="/seller/:id" component={SellerScreen}></Route>
-          <Route path="/cart/:id?" component={CartScreen}></Route>
-          <Route path="/product/:id" component={ProductScreen} exact></Route>
-          <Route path="/product/:id/edit" component={ProductEditScreen} exact ></Route>
+        <Suspense fallback={<LoadingBox></LoadingBox>}>
 
-          <Route path="/signin" component={SigninScreen}></Route>
-          <Route path="/register" component={RegisterScreen}></Route>
-          <Route path="/shipping" component={ShippingAddressScreen}></Route>
-          <Route path="/payment" component={PaymentMethodScreen}></Route>
-          <Route path="/placeorder" component={PlaceOrderScreen}></Route>
-          <Route path="/order/:id" component={OrderScreen}></Route>
-          <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <main>
+            <Route path="/seller/:id" component={SellerScreen}></Route>
+            <Route path="/cart/:id?" component={CartScreen}></Route>
+            <Route path="/product/:id" component={ProductScreen} exact></Route>
+            <Route path="/product/:id/edit" component={ProductEditScreen} exact ></Route>
 
-
-
-          <Route
-            path="/search/name/:name?"
-            component={SearchScreen}
-            exact
-          ></Route>
-          <Route
-            path="/search/category/:category"
-            component={SearchScreen}
-            exact
-          ></Route>
-          <Route
-            path="/search/category/:category/name/:name"
-            component={SearchScreen}
-            exact
-          ></Route>
-          <Route
-            path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
-            component={SearchScreen}
-            exact
-          ></Route>
-          {/* ------------------------- */}
-          <PrivateRoute path="/essay/:id/edit" component={EssayEdit} exact></PrivateRoute>
-          <PrivateRoute path="/essay/create" component={EssayCreate} exact></PrivateRoute>
-
-          <PrivateRoute
-            path="/essayList/pageNumber/:pageNumber"
-            component={EssayList}
-            exact
-          ></PrivateRoute>
-          {/* <PrivateRoute
-            path="/essayList/category/:category"
-            component={EssayList}
-            exact
-          ></PrivateRoute> */}
-          {/* <PrivateRoute
-            path="/essayList/category/:category/pageNumber/:pageNumber"
-            component={EssayList}
-            exact
-          ></PrivateRoute> */}
-          <PrivateRoute
-            path="/essayList/category/:category/address/:address/pageNumber/:pageNumber"
-            component={EssayList}
-            exact
-          ></PrivateRoute>
-          <PrivateRoute path="/essayList" component={EssayList} exact></PrivateRoute>
-
-          <PrivateRoute
-            path="/EssayListTrash/pageNumber/:pageNumber"
-            component={EssayListTrash}
-            exact
-          ></PrivateRoute>
-          <PrivateRoute path="/EssayListTrash" component={EssayListTrash} exact></PrivateRoute>
-
-          <PrivateRoute
-            path="/profile"
-            component={ProfileScreen}
-          ></PrivateRoute>
-          <PrivateRoute
-            path="/map"
-            component={MapScreen}
-          ></PrivateRoute>
+            <Route path="/signin" component={SigninScreen}></Route>
+            <Route path="/register" component={RegisterScreen}></Route>
+            <Route path="/shipping" component={ShippingAddressScreen}></Route>
+            <Route path="/payment" component={PaymentMethodScreen}></Route>
+            <Route path="/placeorder" component={PlaceOrderScreen}></Route>
+            <Route path="/order/:id" component={OrderScreen}></Route>
+            <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
 
 
 
-          <AdminRoute
-            path="/productlist/pageNumber/:pageNumber"
-            component={ProductListScreen}
-            exact
-          ></AdminRoute>
-          <AdminRoute
-            path="/productlist"
-            component={ProductListScreen}
-            exact
-          ></AdminRoute>
-          <AdminRoute
-            path="/orderlist"
-            component={OrderListScreen}
-            exact
-          ></AdminRoute>
-          <AdminRoute
-            path="/userlist"
-            component={UserListScreen}
-          ></AdminRoute>
-          <AdminRoute
-            path="/user/:id/edit"
-            component={UserEditScreen}
-          ></AdminRoute>
-          <AdminRoute
-            path="/dashboard"
-            component={DashboardScreen}
-          ></AdminRoute>
+            <Route
+              path="/search/name/:name?"
+              component={SearchScreen}
+              exact
+            ></Route>
+            <Route
+              path="/search/category/:category"
+              component={SearchScreen}
+              exact
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name"
+              component={SearchScreen}
+              exact
+            ></Route>
+            <Route
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
+              component={SearchScreen}
+              exact
+            ></Route>
+            {/* ------------------------- */}
+            <PrivateRoute path="/essay/:id/edit" component={EssayEdit} exact></PrivateRoute>
+            <PrivateRoute path="/essay/create" component={EssayCreate} exact></PrivateRoute>
 
-          <SellerRoute
-            path="/productlist/seller"
-            component={ProductListScreen}
-          ></SellerRoute>
-          <SellerRoute
-            path="/orderlist/seller"
-            component={OrderListScreen}
-          ></SellerRoute>
+            <PrivateRoute
+              path="/essayList/pageNumber/:pageNumber"
+              component={EssayList}
+              exact
+            ></PrivateRoute>
 
-          <Route path="/" component={HomeScreen} exact></Route>
-        </main>
+            <PrivateRoute
+              path="/essayList/category/:category/address/:address/pageNumber/:pageNumber"
+              component={EssayList}
+              exact
+            ></PrivateRoute>
+            <PrivateRoute path="/essayList" component={EssayList} exact></PrivateRoute>
+
+            <PrivateRoute
+              path="/EssayListTrash/pageNumber/:pageNumber"
+              component={EssayListTrash}
+              exact
+            ></PrivateRoute>
+            <PrivateRoute path="/EssayListTrash" component={EssayListTrash} exact></PrivateRoute>
+
+            <PrivateRoute
+              path="/profile"
+              component={ProfileScreen}
+            ></PrivateRoute>
+            <PrivateRoute
+              path="/map"
+              component={MapScreen}
+            ></PrivateRoute>
+
+
+
+            <AdminRoute
+              path="/productlist/pageNumber/:pageNumber"
+              component={ProductListScreen}
+              exact
+            ></AdminRoute>
+            <AdminRoute
+              path="/productlist"
+              component={ProductListScreen}
+              exact
+            ></AdminRoute>
+            <AdminRoute
+              path="/orderlist"
+              component={OrderListScreen}
+              exact
+            ></AdminRoute>
+            <AdminRoute
+              path="/userlist"
+              component={UserListScreen}
+            ></AdminRoute>
+            <AdminRoute
+              path="/user/:id/edit"
+              component={UserEditScreen}
+            ></AdminRoute>
+            <AdminRoute
+              path="/dashboard"
+              component={DashboardScreen}
+            ></AdminRoute>
+
+            <SellerRoute
+              path="/productlist/seller"
+              component={ProductListScreen}
+            ></SellerRoute>
+            <SellerRoute
+              path="/orderlist/seller"
+              component={OrderListScreen}
+            ></SellerRoute>
+
+            <Route path="/" component={HomeScreen} exact></Route>
+            <Route path="/pageNumber/:pageNumber" component={HomeScreen} exact></Route>
+          </main>
+        </Suspense>
         <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>

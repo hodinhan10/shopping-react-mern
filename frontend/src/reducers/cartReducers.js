@@ -12,17 +12,20 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
     case CART_ADD_ITEM:
       const item = action.payload;
       // console.log('item',item)
+      // console.log('state.cartItems',state.cartItems)
       const existItem = state.cartItems.find((x) => x.product === item.product);
-      // console.log('existItem',existItem)
-      if (existItem) {
+      // console.log('existItem',Booleasn(existItem))
+      if (existItem) { // thêm trùng lấy cái mới
+
         return {
           ...state,
           error: '',
           cartItems: state.cartItems.map((x) =>
             x.product === existItem.product ? item : x
           ),
+
         };
-      } else {
+      } else { // ko trùng thêm mới vào
         return { ...state, error: '', cartItems: [...state.cartItems, item] };
       }
     case CART_REMOVE_ITEM:

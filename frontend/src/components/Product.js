@@ -7,6 +7,7 @@ export default function Product(props) {
   const { product } = props;
   const ReviewUsers = [...product.reviews].filter(r => r.rating >=3);
   const RatingUsers = (ReviewUsers.reduce((a, c) => c.rating + a, 0)/ReviewUsers.length)
+  
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   return (
