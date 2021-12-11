@@ -41,11 +41,11 @@ import AdminRoute from './components/AdminRoute';
 import PrivateRoute from './components/PrivateRoute';
 import LoadingBox from './components/LoadingBox';
 import SellerRoute from './components/SellerRoute';
+import MessageBox from './components/MessageBox';
+import SearchBox from'./components/SearchBox';
 
 
 // used lazy
-const MessageBox = React.lazy(() => import('./components/MessageBox'));
-const SearchBox = React.lazy(() => import('./components/SearchBox'));
 const CartScreen = React.lazy(() => import('./screens/CartScreen'));
 const HomeScreen = React.lazy(() => import('./screens/HomeScreen'));
 const OrderHistoryScreen = React.lazy(() => import('./screens/OrderHistoryScreen'));
@@ -104,8 +104,6 @@ function App() {
 
   }, [dispatch, successCoin]);
   return (
-
-
     <BrowserRouter>
       <div className="grid-container">
         <header className="row">
@@ -203,95 +201,95 @@ function App() {
             )}
           </div>
         </header>
-        <Suspense fallback={<LoadingBox></LoadingBox>}>
-          <aside className={sidebarIsOpen ? 'open' : ''}>
-            <ul className="categories">
-              <li>
-                <strong>Categories</strong>
-                <button
-                  onClick={() => setSidebarIsOpen(false)}
-                  className="close-sidebar"
-                  type="button"
-                >
-                  <i className="fa fa-close"></i>
-                </button>
-              </li>
-              {loadingCategories ? (
-                <LoadingBox></LoadingBox>
-              ) : errorCategories ? (
-                <MessageBox variant="danger">{errorCategories}</MessageBox>
-              ) : (
-                categories.map((c) => (
-                  <li key={c}>
-                    <Link
-                      to={`/search/category/${c}`}
-                      onClick={() => setSidebarIsOpen(false)}
-                    >
-                      {c}
+
+        <aside className={sidebarIsOpen ? 'open' : ''}>
+          <ul className="categories">
+            <li>
+              <strong>Categories</strong>
+              <button
+                onClick={() => setSidebarIsOpen(false)}
+                className="close-sidebar"
+                type="button"
+              >
+                <i className="fa fa-close"></i>
+              </button>
+            </li>
+            {loadingCategories ? (
+              <LoadingBox></LoadingBox>
+            ) : errorCategories ? (
+              <MessageBox variant="danger">{errorCategories}</MessageBox>
+            ) : (
+              categories.map((c) => (
+                <li key={c}>
+                  <Link
+                    to={`/search/category/${c}`}
+                    onClick={() => setSidebarIsOpen(false)}
+                  >
+                    {c}
+                  </Link>
+                </li>
+              ))
+            )}
+
+            {/* Reponsi */}
+            <div className="reponsi">
+              {userInfo && userInfo.isAdmin && (
+                <ul >
+                  <li>
+                    <strong>Admin</strong>
+                  </li>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              )}
+              {userInfo ? (
+                <ul>
+                  <li>
+                    <strong>{userInfo.name}</strong>
+                  </li>
+                  <li>
+                    <Link to="/profile">User Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderhistory">Order History</Link>
+                  </li>
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
                     </Link>
                   </li>
-                ))
+                </ul>
+              ) : (
+                <Link to="/signin">Sign In</Link>
               )}
-
-              {/* Reponsi */}
-              <div className="reponsi">
-                {userInfo && userInfo.isAdmin && (
-                  <ul >
-                    <li>
-                      <strong>Admin</strong>
-                    </li>
-                    <li>
-                      <Link to="/dashboard">Dashboard</Link>
-                    </li>
-                    <li>
-                      <Link to="/productlist">Products</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderlist">Orders</Link>
-                    </li>
-                    <li>
-                      <Link to="/userlist">Users</Link>
-                    </li>
-                  </ul>
-                )}
-                {userInfo ? (
-                  <ul>
-                    <li>
-                      <strong>{userInfo.name}</strong>
-                    </li>
-                    <li>
-                      <Link to="/profile">User Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderhistory">Order History</Link>
-                    </li>
-                    <li>
-                      <Link to="#signout" onClick={signoutHandler}>
-                        Sign Out
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  <Link to="/signin">Sign In</Link>
-                )}
-                {userInfo && userInfo.isSeller && (
-                  <ul>
-                    <li>
-                      <strong>Seller</strong>
-                    </li>
-                    <li>
-                      <Link to="/productlist/seller">Products</Link>
-                    </li>
-                    <li>
-                      <Link to="/orderlist/seller">Orders</Link>
-                    </li>
-                  </ul>
-                )}
-              </div>
-            </ul>
-          </aside>
-
-          <main>
+              {userInfo && userInfo.isSeller && (
+                <ul>
+                  <li>
+                    <strong>Seller</strong>
+                  </li>
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                </ul>
+              )}
+            </div>
+          </ul>
+        </aside>
+        <main>
+          <Suspense fallback={<LoadingBox></LoadingBox>}>
             <Route path="/seller/:id" component={SellerScreen}></Route>
             <Route path="/cart/:id?" component={CartScreen}></Route>
             <Route path="/product/:id" component={ProductScreen} exact></Route>
@@ -401,12 +399,11 @@ function App() {
 
             <Route path="/" component={HomeScreen} exact></Route>
             <Route path="/pageNumber/:pageNumber" component={HomeScreen} exact></Route>
-          </main>
-        </Suspense>
+          </Suspense>
+        </main>
         <footer className="row center">All right reserved</footer>
       </div>
     </BrowserRouter>
-
   );
 }
 
