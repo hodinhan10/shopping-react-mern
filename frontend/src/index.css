@@ -480,6 +480,10 @@ img.large {
   background-color: #e0e0f0;
 }
 
+.accordion {
+  margin: 3em auto;
+  width: 45em;
+}
 @media (max-width:991px) {
   html {
     font-size: 55%;
