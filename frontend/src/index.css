@@ -484,6 +484,7 @@ img.large {
   margin: 3em auto;
   width: 45em;
 }
+
 @media (max-width:991px) {
   html {
     font-size: 55%;

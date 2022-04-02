@@ -5,11 +5,7 @@ import Rating from './Rating';
 
 export default function Product(props) {
   const { product } = props;
-  const ReviewUsers = [...product.reviews].filter(r => r.rating >=3);
-  const RatingUsers = (ReviewUsers.reduce((a, c) => c.rating + a, 0)/ReviewUsers.length)
-  
-  const userSignin = useSelector((state) => state.userSignin);
-  const { userInfo } = userSignin;
+
   return (
     <div key={product._id} className="card">
       <Link to={`/product/${product._id}`}>
@@ -20,9 +16,10 @@ export default function Product(props) {
           <h2>{product.name}</h2>
         </Link>
         <Rating
-          rating={( userInfo !== null && userInfo !== undefined && userInfo.isAdmin ) ? product.rating : RatingUsers}
-          numReviews={(userInfo !== null && userInfo !== undefined && userInfo.isAdmin) ? product.numReviews : ReviewUsers.length}
+          rating={product.rating }
+          numReviews={ product.numReviews }
         ></Rating>
+
         <div className="row">
           <div className="price">${product.price}</div>
           <div>

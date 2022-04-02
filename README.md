@@ -11,3 +11,4 @@ heroku login -i
 git add .
 git commit -am "update"
 git push heroku master
+git push heroku HEAD:master

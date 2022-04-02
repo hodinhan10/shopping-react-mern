@@ -34,7 +34,7 @@ export default function HomeScreen() {
 
   useEffect(() => {
     dispatch(listTopSellers());
-    dispatch(listProducts({ pageNumber }));
+    dispatch(listProducts({ pageNumber}));
     dispatch(listEssays({}));
   }, [dispatch, pageNumber]);
 

@@ -25,12 +25,13 @@ productRouter.get(
       req.query.rating && Number(req.query.rating) !== 0
         ? Number(req.query.rating)
         : 0;
-
+    console.log('rating',rating)
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
+    console.log('ratingFilter',ratingFilter)
     const sortOrder =
       order === 'lowest'
         ? { price: 1 }
@@ -57,7 +58,7 @@ productRouter.get(
       .sort(sortOrder)
       .skip(pageSize * (page - 1))
       .limit(pageSize);
-      // console.log('1', { products, page, pages: Math.ceil(count / pageSize) })
+      console.log('products',products)
     res.send({ products, page, pages: Math.ceil(count / pageSize) });
   })
 );

@@ -33,7 +33,7 @@ export const listProducts = ({
   min = 0,
   max = 0,
   rating = 0,
-}) => async (dispatch) => {
+}) => async (dispatch, getState) => {
   dispatch({ type: PRODUCT_LIST_REQUEST });
 
   try {
